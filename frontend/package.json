@@ -10,7 +10,7 @@
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "test": "jest --watch",
+    "test": "jest --watchALL",
     "test:ci": "jest --passWithNoTests"
   },
   "dependencies": {
@@ -33,6 +33,7 @@
     "@vitejs/plugin-react": "^4.4.1",
     "@vitest/browser": "^3.2.3",
     "@vitest/coverage-v8": "^3.2.3",
+    "axios": "^1.9.0",
     "babel-jest": "^30.0.0",
     "eslint": "^9.25.0",
     "eslint-plugin-react-hooks": "^5.2.0",

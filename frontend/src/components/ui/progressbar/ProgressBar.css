@@ -1,0 +1,50 @@
+/* src/components/ui/ProgressBar.css */
+
+/* ===== Base (mobile-first) ===== */
+.progress-wrapper {
+  width: 100%;
+  background-color: #e5e7eb;     /* gray-200 */
+  border-radius: 9999px;         /* pill shape */
+  overflow: hidden;
+  position: relative;
+  height: 0.5rem;                /* 8px tall on mobile */
+}
+
+.progress-bar {
+  background-color: #3b82f6;     /* blue-500 */
+  transition: width 0.3s ease;
+  height: 100%;                  /* fill the wrapper’s height */
+}
+
+.progress-label {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 0.75rem;            /* 12px on mobile */
+  font-weight: 500;
+  color: #1f2937;                /* gray-800 */
+  pointer-events: none;
+}
+
+/* ===== Responsive overrides ===== */
+
+/* On tablets and up, make it more prominent */
+@media (min-width: 768px) {
+  .progress-wrapper {
+    height: 0.75rem;             /* 12px tall on larger screens */
+  }
+  .progress-label {
+    font-size: 0.875rem;         /* 14px on larger screens */
+  }
+}
+
+/* On large desktops, further boost visibility if desired */
+@media (min-width: 1280px) {
+  .progress-wrapper {
+    height: 1rem;                /* 16px tall */
+  }
+  .progress-label {
+    font-size: 1rem;             /* 16px label */
+  }
+}

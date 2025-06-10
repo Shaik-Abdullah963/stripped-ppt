@@ -1,12 +1,16 @@
 import express from 'express';
 import { sequelize } from './config/database.js';
 import presentationsRouter from './routes/presentationRoute.js';
+import slidesRouter        from './routes/slide.js';
+import slideVersionsRouter  from './routes/slideVersions.js';
 
 const app = express();
 app.use(express.json());
 
 app.get('/', (req, res) => res.send('OK'));
 app.use('/presentations', presentationsRouter);
+app.use('/presentations/:presentationId/slides', slidesRouter);
+app.use('/slides/:slideId/versions', slideVersionsRouter);
 
 async function startServer() {
   try {

@@ -1,0 +1,104 @@
+/* src/components/ui/Typography.css */
+
+/* ===== Base (mobile-first) ===== */
+.typography {
+  margin: 0;
+  padding: 0;
+  color: #1f2937;        /* gray-800 */
+}
+
+/* Headings (mobile sizes) */
+.typography--h1 {
+  font-size: 2rem;       /* 32px */
+  line-height: 2.25rem;  /* 36px */
+  font-weight: 700;
+}
+.typography--h2 {
+  font-size: 1.75rem;    /* 28px */
+  line-height: 2rem;     /* 32px */
+  font-weight: 600;
+}
+.typography--h3 {
+  font-size: 1.5rem;     /* 24px */
+  line-height: 1.75rem;  /* 28px */
+  font-weight: 600;
+}
+.typography--h4 {
+  font-size: 1.25rem;    /* 20px */
+  line-height: 1.5rem;   /* 24px */
+  font-weight: 500;
+}
+.typography--h5 {
+  font-size: 1.125rem;   /* 18px */
+  line-height: 1.25rem;  /* 20px */
+  font-weight: 500;
+}
+.typography--h6 {
+  font-size: 1rem;       /* 16px */
+  line-height: 1.25rem;  /* 20px */
+  font-weight: 500;
+}
+
+/* Body text */
+.typography--body {
+  font-size: 1rem;       /* 16px */
+  line-height: 1.75rem;  /* 28px */
+}
+
+/* Caption text */
+.typography--caption {
+  font-size: 0.75rem;    /* 12px */
+  line-height: 1rem;     /* 16px */
+  color: #6b7280;        /* gray-500 */
+}
+
+/* ===== Responsive overrides ===== */
+
+/* Tablet & up: increase sizes */
+@media (min-width: 768px) {
+  .typography--h1 {
+    font-size: 2.25rem;      /* 36px */
+    line-height: 2.5rem;     /* 40px */
+  }
+  .typography--h2 {
+    font-size: 2rem;         /* 32px */
+    line-height: 2.25rem;    /* 36px */
+  }
+  .typography--h3 {
+    font-size: 1.75rem;      /* 28px */
+    line-height: 2rem;       /* 32px */
+  }
+  .typography--h4 {
+    font-size: 1.5rem;       /* 24px */
+    line-height: 1.75rem;    /* 28px */
+  }
+  .typography--h5 {
+    font-size: 1.25rem;      /* 20px */
+    line-height: 1.5rem;     /* 24px */
+  }
+  .typography--h6 {
+    font-size: 1.125rem;     /* 18px */
+    line-height: 1.25rem;    /* 20px */
+  }
+  .typography--body {
+    font-size: 1.0625rem;    /* 17px */
+    line-height: 1.75rem;    /* 28px */
+  }
+  .typography--caption {
+    font-size: 0.8125rem;    /* 13px */
+    line-height: 1.125rem;   /* 18px */
+  }
+}
+
+/* Large desktop: further refinement if desired */
+@media (min-width: 1280px) {
+  .typography--h1 {
+    font-size: 2.5rem;       /* 40px */
+    line-height: 3rem;       /* 48px */
+  }
+  .typography--h2 {
+    font-size: 2.25rem;      /* 36px */
+    line-height: 2.5rem;     /* 40px */
+  }
+  /* You can similarly tweak other variants here if needed */
+}

@@ -1,7 +1,7 @@
 // backend/src/tests/Slide.test.js
 import { sequelize } from '../config/database.js';
 import { Presentation } from '../models/Presentation.js';
-import { Slide }        from '../models/Slide.js';
+import { Slide }        from '../models/slide.js';
 
 beforeAll(async () => {
   // connect & build fresh schema in the test DB

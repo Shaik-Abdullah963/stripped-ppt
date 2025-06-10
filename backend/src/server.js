@@ -1,10 +1,12 @@
 import express from 'express';
 import { sequelize } from './config/database.js';
+import presentationsRouter from './routes/presentationRoute.js';
 
 const app = express();
 app.use(express.json());
 
 app.get('/', (req, res) => res.send('OK'));
+app.use('/presentations', presentationsRouter);
 
 async function startServer() {
   try {

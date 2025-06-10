@@ -1,23 +1,20 @@
-import request from 'supertest';
-import { sequelize } from '../config/database.js';
-import app from '../server.js';
+// backend/src/tests/Presentation.test.js
+import { setupDatabase, teardownDatabase } from './jest.setup.js';
+import { Presentation } from '../models/Presentation.js';
 
-beforeAll(async () => {
-  // reset DB
-  await sequelize.sync({ force: true });
-});
+beforeAll(setupDatabase);
+afterAll(teardownDatabase);
 
-afterAll(async () => {
-  await sequelize.close();
-});
+describe('Presentation model', () => {
+  it('can create with a title and auto‐set timestamps', async () => {
+    const pres = await Presentation.create({ title: 'Deck A' });
+    expect(pres.id).toBeGreaterThan(0);
+    expect(pres.title).toBe('Deck A');
+    expect(pres.createdAt).toBeDefined();
+    expect(pres.updatedAt).toBeDefined();
+  });
 
-describe('POST /presentations', () => {
-  it('should create a new presentation', async () => {
-    const res = await request(app)
-      .post('/presentations')
-      .send({ title: 'My First Deck' });
-    expect(res.status).toBe(200);
-    expect(res.body).toHaveProperty('id');
-    expect(res.body.title).toBe('My First Deck');
+  it('rejects creation without title', async () => {
+    await expect(Presentation.create({})).rejects.toThrow();
   });
 });

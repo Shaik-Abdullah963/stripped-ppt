@@ -7,16 +7,22 @@ export default defineConfig({
   plugins: [
     react(),
     svgr({
-      // optional SVGR options
-      svgrOptions: {
-        icon: true,
-        // more options: https://react-svgr.com/docs/options/
-      },
+      svgrOptions: { icon: true },
     }),
   ],
   resolve: {
     alias: {
-      '@': '/src',  // convenient alias if you like
+      '@': '/src',
+    },
+  },
+  server: {
+    proxy: {
+      // Proxy any calls to /presentations to your backend
+      '/presentations': {
+        target: 'http://localhost:3002',
+        changeOrigin: true,
+        rewrite: (path) => path, // keep the path as-is
+      },
     },
   },
 });

@@ -1,20 +1,26 @@
-/** @type { import('@storybook/react-vite').Preview } */
-const preview = {
-  parameters: {
-    controls: {
-      matchers: {
-       color: /(background|color)$/i,
-       date: /Date$/i,
-      },
-    },
+// .storybook/preview.js
+import React from 'react';
+import { initialize, mswDecorator } from 'msw-storybook-addon';
 
-    a11y: {
-      // 'todo' - show a11y violations in the test UI only
-      // 'error' - fail CI on a11y violations
-      // 'off' - skip a11y checks entirely
-      test: "todo"
-    }
+// 1. Start the MSW worker
+initialize();
+
+// 2. Provide the MSW decorator
+export const decorators = [mswDecorator];
+
+// 3. Global parameters
+export const parameters = {
+  msw: {
+    // *here* we bypass ALL unhandled requests (including CSS fetches)
+    onUnhandledRequest: 'bypass',
+  },
+  controls: {
+    matchers: {
+      color: /(background|color)$/i,
+      date: /Date$/i,
+    },
+  },
+  a11y: {
+    test: 'todo',
   },
 };
-
-export default preview;

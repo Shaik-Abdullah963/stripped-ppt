@@ -1,33 +1,58 @@
-// setupTests.js
-// (ESM module - loaded automatically by Jest via setupFilesAfterEnv)
-
-/**
- * 1. Extend Jest's expect() with custom matchers from @testing-library/jest-dom
- *    (e.g. .toBeInTheDocument(), .toHaveClass(), etc.)
- */
+// src/setupTests.js
 import '@testing-library/jest-dom';
+import 'whatwg-fetch';
+import { TextEncoder, TextDecoder } from 'util';
 
-/**
- * 2. Polyfill window.matchMedia for components relying on CSS media queries.
- */
-if (typeof window !== 'undefined' && !window.matchMedia) {
-  window.matchMedia = () => ({
-    matches: false,
-    addListener: () => {},
-    removeListener: () => {},
-    onchange: null,
-    addEventListener: () => {},
-    removeEventListener: () => {},
-    dispatchEvent: () => false,
-  });
+// 1) TextEncoder/TextDecoder
+if (typeof global.TextEncoder === 'undefined') {
+  global.TextEncoder = TextEncoder;
+}
+if (typeof global.TextDecoder === 'undefined') {
+  global.TextDecoder = TextDecoder;
 }
 
-/**
- * 3. (Optional) Global fetch polyfill. Uncomment if you need it:
- */
-// import 'whatwg-fetch';
+// 2) BroadcastChannel stub
+if (typeof global.BroadcastChannel === 'undefined') {
+  class BroadcastChannel {
+    constructor(name) { this.name = name; }
+    postMessage() {}
+    addEventListener() {}
+    removeEventListener() {}
+    close() {}
+  }
+  global.BroadcastChannel = BroadcastChannel;
+}
 
-/**
- * 4. (Optional) Configure Jest fake timers globally. Uncomment to use:
- */
-// jest.useFakeTimers();
+// 3) Minimal Streams stubs (no getters, no prototype magic)
+if (typeof global.ReadableStream === 'undefined') {
+  global.ReadableStream = class {
+    constructor() {}
+    getReader() {
+      return {
+        read: () => Promise.resolve({ done: true, value: undefined }),
+        releaseLock: () => {}
+      };
+    }
+  };
+}
+if (typeof global.WritableStream === 'undefined') {
+  global.WritableStream = class {
+    constructor() {}
+  };
+}
+if (typeof global.TransformStream === 'undefined') {
+  global.TransformStream = class {
+    constructor() {
+      this.readable = new global.ReadableStream();
+      this.writable = new global.WritableStream();
+    }
+  };
+}
+
+// 4) Axios mock
+jest.mock('axios', () => ({
+  get: jest.fn(),
+  post: jest.fn(),
+  put: jest.fn(),
+  delete: jest.fn(),
+}));

@@ -2,7 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Button from '../button/Button';
-import './IconButton.css';
+import './IconButton.module.css';
 
 /**
  * An icon-only button. Inherits Button variants/sizes but hides text.

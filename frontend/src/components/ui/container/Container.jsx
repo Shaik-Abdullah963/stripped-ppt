@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import './Container.css';
+import './Container.module.css';
 
 /**
  * Centers content with max-width and horizontal padding.

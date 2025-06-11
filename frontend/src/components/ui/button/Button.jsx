@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import './Button.css'; // create this for your styles
+import './Button.module.css'; // create this for your styles
 
 export default function Button({
   variant = 'primary',

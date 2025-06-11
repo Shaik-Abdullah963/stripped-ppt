@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import './Typography.css';
+import './Typography.module.css';
 
 const VARIANTS = {
   h1: 'h1',

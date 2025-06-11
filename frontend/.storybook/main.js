@@ -12,6 +12,7 @@ export default {
     '@storybook/addon-a11y',
     '@storybook/addon-vitest',
     '@chromatic-com/storybook',
+    'msw-storybook-addon',           // ← added MSW integration
   ],
   framework: {
     name: '@storybook/react-vite',

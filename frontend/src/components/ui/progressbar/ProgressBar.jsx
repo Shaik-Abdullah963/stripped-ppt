@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import './ProgressBar.css';
+import './ProgressBar.module.css';
 
 export default function ProgressBar({ value = 0, label, height = '0.5rem' }) {
   // Clamp between 0 and 1

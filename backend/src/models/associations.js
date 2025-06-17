@@ -1,6 +1,6 @@
 import { DataTypes, Op } from 'sequelize';
 import { sequelize } from '../config/database.js';
-import { Slide } from './slide.js';
+import { Slide } from './Slid.js';
 import { SlideVersion } from './SlideVersion.js';
 import { Presentation } from './Presentation.js';
 

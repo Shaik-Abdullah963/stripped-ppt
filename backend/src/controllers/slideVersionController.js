@@ -1,6 +1,6 @@
 // backend/src/controllers/slideVersionController.js
 import { SlideVersion } from '../models/SlideVersion.js';
-import { Slide }        from '../models/slide.js';
+import { Slide }        from '../models/Slid.js';
 
 export async function createSlideVersion(req, res, next) {
   try {

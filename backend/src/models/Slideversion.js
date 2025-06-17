@@ -1,6 +1,6 @@
 import { DataTypes } from 'sequelize';
 import { sequelize } from '../config/database.js';
-import { Slide } from './slide.js';
+import { Slide } from './Slid.js';
 
 export const SlideVersion = sequelize.define(
   'SlideVersion',

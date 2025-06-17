@@ -1,6 +1,6 @@
 // backend/src/controllers/slideController.js
 import { DataTypes, Op } from 'sequelize';
-import { Slide }        from '../models/slide.js';
+import { Slide }        from '../models/Slid.js';
 import { Presentation } from '../models/Presentation.js';
 // Add this at the top of your file with other imports
 import { SlideVersion } from '../models/SlideVersion.js';  // Adjust filename casing if needed

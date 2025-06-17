@@ -8,20 +8,16 @@ const isProd = process.env.NODE_ENV === 'production';
 let sequelize;
 
 if (isProd) {
-  // Use PostgreSQL for production environment
-  sequelize = new Sequelize(process.env.DATABASE_URL, {
-    dialect: 'postgres',
-    dialectOptions: {
-      ssl: {
-        require: true,
-        rejectUnauthorized: false
-      }
-    },
+  // Use in-memory SQLite for production (Vercel serverless environment)
+  sequelize = new Sequelize('sqlite::memory:', {
+    dialect: 'sqlite',
     logging: false
   });
+  
+  console.log('WARNING: Using in-memory SQLite database. Data will not persist between requests!');
 } else {
-  // Use SQLite for development
-  const file = process.env.DB_FILE || './backend/data/dev.sqlite';
+  // Use file-based SQLite for development
+  const file = process.env.DB_FILE || './data/dev.sqlite';
   const storagePath = path.resolve(file);
   
   sequelize = new Sequelize({

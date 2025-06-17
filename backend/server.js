@@ -21,45 +21,36 @@ app.use(cors({
 
 app.use(express.json());
 
+// Database initialization middleware for serverless
+app.use(async (req, res, next) => {
+  try {
+    await sequelize.initializeForServerless();
+    next();
+  } catch (error) {
+    console.error('Failed to initialize database:', error);
+    next(); // Continue anyway to avoid blocking all requests
+  }
+});
+
 // Routes
 app.get('/', (req, res) => res.send('OK'));
 app.use('/presentations', presentationsRouter);
-app.use('/presentations/:presentationId/slides', slidesRouter);
+app.use('/slides', slidesRouter);
 app.use('/slides/:slideId/versions', slideVersionsRouter);
 
-// Enhance database initialization
-let dbPromise = sequelize.authenticate()
-  .then(() => {
-    console.log('Database authenticated');
-    return sequelize.sync();
-  })
-  .then(() => {
-    console.log('Database synced');
-    return true;
-  })
-  .catch((err) => {
-    console.error('Database initialization error:', err);
-    return false;
-  });
+// Error handling middleware
+app.use((err, req, res, next) => {
+  console.error('Express error:', err);
+  res.status(500).json({ error: 'Internal Server Error' });
+});
 
-// Improve error handling in handler function
-export default async function handler(req, res) {
-  try {
-    // Wait for database initialization
-    console.log('Waiting for DB initialization...');
-    await dbPromise;
-    console.log('DB initialized, processing request for', req.url);
-    
-    // Process the request with Express
-    return new Promise((resolve, reject) => {
-      app(req, res);
-      
-      // These event handlers ensure the function doesn't hang
-      res.on('finish', resolve);
-      res.on('error', reject);
-    });
-  } catch (error) {
-    console.error('Serverless function error:', error);
-    res.status(500).json({ error: 'Internal server error', message: error.message });
-  }
+// Start server in development
+if (process.env.NODE_ENV !== 'production') {
+  const PORT = process.env.PORT || 3000;
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+  });
 }
+
+// Export for serverless environments
+export default app;

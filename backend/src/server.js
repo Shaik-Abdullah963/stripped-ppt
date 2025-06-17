@@ -6,7 +6,10 @@ import slidesRouter from './routes/slide.js';
 import slideVersionsRouter from './routes/slideVersions.js';
 import { initializeAssociations } from './models/associations.js';
 
+// Initialize database associations
 initializeAssociations();
+
+// Create Express app
 const app = express();
 
 // Add CORS middleware
@@ -24,23 +27,39 @@ app.use('/presentations', presentationsRouter);
 app.use('/presentations/:presentationId/slides', slidesRouter);
 app.use('/slides/:slideId/versions', slideVersionsRouter);
 
-async function startServer() {
-  try {
-    await sequelize.authenticate();
-    await sequelize.sync();
-    const port = process.env.PORT || 3002;
-    app.listen(port, () => {
-      // For your take-home assignment, keeping logs is fine
-      console.log(`Server running on port ${port}`);
-    });
-  } catch (err) {
-    console.error('Database startup failed:', err);
-    process.exit(1);
+// Initialize database on cold start
+let isDbInitialized = false;
+
+async function initializeDb() {
+  if (!isDbInitialized) {
+    try {
+      await sequelize.authenticate();
+      await sequelize.sync();
+      isDbInitialized = true;
+      console.log('Database connected and synced');
+    } catch (err) {
+      console.error('Database initialization error:', err);
+      // Don't exit process in serverless
+    }
   }
 }
 
-if (process.env.NODE_ENV !== 'test') {
-  startServer();
+// For local development server only
+if (process.env.NODE_ENV !== 'production' && process.env.NODE_ENV !== 'test') {
+  const port = process.env.PORT || 3002;
+  
+  // Local server needs database initialized before listening
+  initializeDb().then(() => {
+    app.listen(port, () => {
+      console.log(`Local server running on port ${port}`);
+    });
+  });
 }
 
-export default app;
+// Serverless handler - Vercel will use this
+export default async (req, res) => {
+  // Initialize database on cold start
+  await initializeDb();
+  // Handle request with Express
+  return app(req, res);
+};

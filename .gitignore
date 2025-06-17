@@ -1,2 +1,10 @@
+# Node.js dependencies
 /backend/node_modules/
+/frontend/node_modules/
+
+#Environment Files
 /backend/.env.test/
+/backend/.env
+/frontend/.env
+/frontend/.env.production
+

@@ -1,0 +1,116 @@
+/* src/components/editor/MarkdownEditor.css */
+
+/* Container */
+.md-editor {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+/* Error banner */
+.md-editor__error {
+  color: #b00020;
+  background: #fdecea;
+  padding: 0.5rem;
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+/* Panes wrapper: source & preview */
+.md-editor__panes {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+/* Textarea (Markdown input) */
+.md-editor__input {
+  flex: 1;
+  font-family: 'Fira Code', monospace;
+  font-size: 0.95rem;
+  padding: 1rem;
+  border: none;
+  border-right: 1px solid #eee;
+  resize: none;
+  outline: none;
+  overflow: auto;
+}
+
+/* Preview pane */
+.md-editor__preview {
+  flex: 1;
+  padding: 1rem;
+  overflow: auto;
+  background: #fafafa;
+  white-space: normal;
+  word-wrap: break-word;
+}
+
+/* Headings in preview */
+.md-editor__preview h1,
+.md-editor__preview h2,
+.md-editor__preview h3 {
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 0.25rem;
+}
+
+/* Tables: full-width and scrollable */
+.md-editor__preview table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0.5rem 0;
+  display: block;
+  overflow-x: auto;
+}
+
+.md-editor__preview th,
+.md-editor__preview td {
+  border: 1px solid #ccc;
+  padding: 0.5rem;
+  text-align: left;
+}
+
+/* Code blocks */
+.md-editor__preview pre {
+  background: #f6f8fa;
+  padding: 0.75rem;
+  border-radius: 4px;
+  overflow-x: auto;
+}
+
+.md-editor__preview code {
+  font-family: 'Fira Code', monospace;
+}
+
+/* Images: responsive */
+.md-editor__preview img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 0.5rem 0;
+}
+
+/* Action buttons */
+.md-editor__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  border-top: 1px solid #eee;
+  background: #fafafa;
+}
+
+/* Responsive: stack panes on narrow screens */
+@media (max-width: 600px) {
+  .md-editor__panes {
+    flex-direction: column;
+  }
+  .md-editor__input {
+    border-right: none;
+    border-bottom: 1px solid #eee;
+  }
+}

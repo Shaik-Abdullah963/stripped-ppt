@@ -18,13 +18,46 @@ export default {
   },
 };
 
-const Template = (args) => <Button {...args}>{args.children}</Button>;
+// Using the newer CSF 3.0 format (recommended for Storybook 7+)
+export const Primary = {
+  args: { 
+    variant: 'primary', 
+    size: 'md', 
+    disabled: false,
+    children: 'Primary Button' // Added children
+  }
+};
 
-export const Primary = Template.bind({});
-Primary.args = { variant: 'primary', size: 'md', disabled: false };
+export const Secondary = {
+  args: { 
+    variant: 'secondary', 
+    size: 'md',
+    children: 'Secondary Button' // Added children
+  }
+};
 
-export const Secondary = Template.bind({});
-Secondary.args = { variant: 'secondary', size: 'md' };
+export const IconOnly = {
+  args: { 
+    variant: 'icon', 
+    size: 'sm',
+    children: '🔍' // Added an icon as children
+  }
+};
 
-export const IconOnly = Template.bind({});
-IconOnly.args = { variant: 'icon', size: 'sm' };
+// Large variant
+export const Large = {
+  args: {
+    variant: 'primary',
+    size: 'lg',
+    children: 'Large Button'
+  }
+};
+
+// Disabled state
+export const Disabled = {
+  args: {
+    variant: 'primary',
+    disabled: true,
+    children: 'Disabled Button'
+  }
+};

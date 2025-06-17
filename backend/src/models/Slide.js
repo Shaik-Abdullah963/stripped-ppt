@@ -1,6 +1,6 @@
 // backend/src/models/Slide.js
 
-import { DataTypes } from 'sequelize';
+import { DataTypes } from 'sequelize';  // Remove Op import
 import { sequelize } from '../config/database.js';  
 
 export const Slide = sequelize.define(
@@ -19,7 +19,4 @@ export const Slide = sequelize.define(
   }
 );
 
-// associations
-import { Presentation } from './Presentation.js';
-Slide.belongsTo(Presentation, { foreignKey: 'presentation_id', onDelete: 'CASCADE' });
-Presentation.hasMany(Slide,    { foreignKey: 'presentation_id', onDelete: 'CASCADE' });
+// REMOVE ALL ASSOCIATIONS AND IMPORTS BELOW THIS LINE

@@ -3,6 +3,9 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import svgr from 'vite-plugin-svgr';
 
+// Use environment variables for API URL
+const apiUrl = process.env.VITE_API_URL || 'http://localhost:3002';
+
 export default defineConfig({
   plugins: [
     react(),
@@ -19,10 +22,15 @@ export default defineConfig({
     proxy: {
       // Proxy any calls to /presentations to your backend
       '/presentations': {
-        target: 'http://localhost:3002',
+        target: apiUrl,
         changeOrigin: true,
         rewrite: (path) => path, // keep the path as-is
       },
+      '/slides': {
+      target: apiUrl,
+      changeOrigin: true,
+      rewrite: (path) => path,
+    },
     },
   },
 });

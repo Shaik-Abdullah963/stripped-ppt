@@ -20,10 +20,16 @@
   border: 1px solid #e0e0e0;
   border-radius: 8px;
   background-color: #fafafa;
+  flex-wrap: wrap; /* Added to fix layout */
+  gap: 0.5rem; /* Added to fix layout */
+  transition: all 0.2s ease; /* Added for smooth transitions when selected */
 }
 .deckRow h4 {
   font-size: 1rem;
   margin: 0;
+  flex-grow: 1; /* Added to fix layout */
+  min-width: 150px; /* Added to fix layout */
+  word-break: break-word; /* Added to fix layout */
 }
 .deckRow button {
   padding: 0.5rem 1rem;
@@ -36,6 +42,35 @@
 .errorText {
   color: #b00020;
   margin-top: 0.5rem;
+}
+
+/* Styles for selected deck - ADD THESE NEW STYLES */
+.selectedDeck {
+  background-color: #e6f7ff;
+  border-left: 4px solid #1890ff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  position: relative;
+  transform: translateX(2px);
+}
+
+.selectedDeck::after {
+  content: "✓";
+  position: absolute;
+  right: 12px;
+  top: 12px;
+  color: #1890ff;
+  font-weight: bold;
+}
+
+.selectedDeck h4 {
+  color: #1890ff;
+  font-weight: 500;
+}
+
+/* Hover effect for deck rows (except selected one) */
+.deckRow:not(.selectedDeck):hover {
+  background-color: #f0f0f0;
+  border-color: #d0d0d0;
 }
 
 /* 2) Tablet and up */
@@ -68,5 +103,62 @@
   }
   .deckRow button {
     font-size: 1rem;
+  }
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.createForm {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.titleInput {
+  padding: 0.5rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  min-width: 200px;
+  font-size: 0.9rem;
+}
+
+.deckButtons {
+  display: flex;
+  gap: 0.5rem;
+  flex-shrink: 0;
+  min-width: 180px;
+  justify-content: flex-end;
+}
+
+/* If you need a danger variant for the delete button */
+.danger {
+  background-color: #dc3545 !important;
+  color: white !important;
+}
+
+.danger:hover {
+  background-color: #c82333 !important;
+}
+
+/* Mobile-specific adjustments */
+@media (max-width: 480px) {
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .createForm {
+    width: 100%;
+  }
+  
+  .titleInput {
+    flex-grow: 1;
   }
 }

@@ -3,7 +3,9 @@ import { sequelize } from './config/database.js';
 import presentationsRouter from './routes/presentationRoute.js';
 import slidesRouter        from './routes/slide.js';
 import slideVersionsRouter  from './routes/slideVersions.js';
+import { initializeAssociations } from './models/associations.js';
 
+initializeAssociations();
 const app = express();
 app.use(express.json());
 

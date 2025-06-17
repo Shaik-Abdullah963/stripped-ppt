@@ -1,18 +1,17 @@
 // .storybook/preview.js
 import React from 'react';
-import { initialize, mswDecorator } from 'msw-storybook-addon';
+import { initialize, mswLoader } from 'msw-storybook-addon';
 
-// 1. Start the MSW worker
-initialize();
+// Initialize MSW
+initialize({
+  onUnhandledRequest: 'bypass' // Set default behavior at initialization
+});
 
-// 2. Provide the MSW decorator
-export const decorators = [mswDecorator];
-
-// 3. Global parameters
+// Global parameters
 export const parameters = {
   msw: {
-    // *here* we bypass ALL unhandled requests (including CSS fetches)
-    onUnhandledRequest: 'bypass',
+    handlers: {},
+    onUnhandledRequest: 'bypass' // Set to bypass all unhandled requests
   },
   controls: {
     matchers: {
@@ -24,3 +23,6 @@ export const parameters = {
     test: 'todo',
   },
 };
+
+// Replace the deprecated mswDecorator with mswLoader
+export const loaders = [mswLoader];

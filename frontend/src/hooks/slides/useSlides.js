@@ -1,32 +1,73 @@
-// src/hooks/slides/useSlides.js
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 
-export function useSlides() {
-  const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(true);
+// Helper function to normalize slide data
+const normalizeSlide = (slide) => {
+  if (!slide) return null;
+  
+  // Check for latestVersion and ensure it has content field
+  if (!slide.latestVersion) {
+    return { ...slide, latestVersion: { content: '', id: null } };
+  }
+  
+  // Make sure content is accessible with the right field name
+  const normalizedVersion = {
+    ...slide.latestVersion,
+    content: slide.latestVersion.content || slide.latestVersion.markdown_content || ''
+  };
+  
+  return { ...slide, latestVersion: normalizedVersion };
+};
+
+export function useSlides(presentationId, refreshTrigger = 0) {
+  const [slides, setSlides] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-
+  
+  // Reset slides when presentation changes
   useEffect(() => {
-    let cancel = false;
-    setLoading(true);
+    setSlides([]);
+    setError(null);
+  }, [presentationId]);
 
-    axios.get('/slides')
-      .then(res => {
-        if (!cancel) {
-          setData(res.data);
-          setError(null);
-        }
+  const refresh = useCallback(() => {
+    if (!presentationId) return Promise.resolve([]);
+    
+    console.log("Refreshing slides for presentation:", presentationId);
+    setLoading(true);
+    
+    return axios.get(`/presentations/${presentationId}/slides`)
+      .then(response => {
+        console.log("Fetched slides:", response.data);
+        
+        // Normalize all slides to ensure consistent data structure
+        const normalizedSlides = response.data.map(normalizeSlide);
+        console.log("Normalized slides:", normalizedSlides);
+        
+        setSlides(normalizedSlides);
+        setLoading(false);
+        return normalizedSlides;
       })
       .catch(err => {
-        if (!cancel) setError(err);
-      })
-      .finally(() => {
-        if (!cancel) setLoading(false);
+        console.error("Error refreshing slides:", err);
+        setError(err);
+        setLoading(false);
+        throw err;
       });
+  }, [presentationId]);
 
-    return () => { cancel = true; };
-  }, []);
-
-  return { data, loading, error };
+  // Fetch slides when component mounts or dependencies change
+  useEffect(() => {
+    let isMounted = true;
+    
+    if (presentationId) {
+      refresh().catch(err => {
+        if (isMounted) console.error("Failed initial refresh:", err);
+      });
+    }
+    
+    return () => { isMounted = false; };
+  }, [presentationId, refreshTrigger, refresh]);
+  
+  return { slides, loading, error, refresh, setSlides };
 }

@@ -1,18 +1,27 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
-export function usePresentations() {
+export function usePresentations(refreshDependency) {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  const fetchPresentations = async () => {
+    try {
+      setLoading(true);
+      const response = await axios.get('/presentations');
+      setData(response.data);
+      setError(null);
+    } catch (err) {
+      setError(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
-    let cancel = false;
-    setLoading(true);
-    axios.get('/presentations')
-      .then(res => { if (!cancel) { setData(res.data); setError(null); } })
-      .catch(err => { if (!cancel) setError(err); })
-      .finally(() => { if (!cancel) setLoading(false); });
-    return () => { cancel = true; };
-  }, []);
+    fetchPresentations();
+  }, [refreshDependency]); // Re-fetch when this changes
+
   return { data, loading, error };
 }

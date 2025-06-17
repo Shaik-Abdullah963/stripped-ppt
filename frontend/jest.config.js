@@ -9,10 +9,16 @@ export default {
   // Jest will treat .jsx files as ESM because "type": "module" is set
   extensionsToTreatAsEsm: ['.jsx'],
 
-  // Let babel-jest handle JS/TS files; no { useESM } here
+  // Let babel-jest handle JS/TS files
   transform: {
     '^.+\\.[jt]sx?$': 'babel-jest',
   },
+
+  // !!! THIS IS THE CRITICAL ADDITION !!!
+  // Tell Jest to transform ES modules in node_modules
+  transformIgnorePatterns: [
+    "/node_modules/(?!(react-markdown|rehype-.*|remark-.*|mdast-.*|micromark|unist-.*|unified|bail|is-plain-obj|trough|vfile.*|react-hotkeys-hook|hast-.*|property-information|space-separated-tokens|comma-separated-tokens))"
+ ],
 
   // Mock out CSS imports
   moduleNameMapper: {

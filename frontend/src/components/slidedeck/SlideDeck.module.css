@@ -1,0 +1,68 @@
+.slide-deck {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: #fff;
+  color: #222;
+}
+
+.slide-deck__controls {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: #f9f9f9;
+}
+
+.slide-deck__nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 1rem;
+  background: #f1f1f1;
+}
+
+.slide-deck__actions {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  background: #f9f9f9;
+}
+
+/* Content must be flex so the editor can grow */
+.slide-deck__content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding: 1rem;
+  background: #fff;
+  min-height: 200px; /* ensure visible even when nested */
+}
+
+.slide-deck__progress {
+  padding: 0.5rem 1rem;
+  background: #f9f9f9;
+}
+
+.slide-deck button,
+.slide-deck__nav button,
+.slide-deck__controls button {
+  font-size: 1rem;
+  padding: 0.5rem 0.75rem;
+}
+
+@media (max-width: 599px) {
+  .slide-deck__controls { padding: 0.5rem; }
+  .slide-deck__nav { padding: 0.25rem; }
+  .slide-deck__actions { padding: 0.25rem; }
+  .slide-deck__content { padding: 0.75rem; }
+  .slide-deck__progress { padding: 0.25rem; }
+}
+
+@media (min-width: 600px) {
+  .slide-deck__controls { padding: 1rem 1.5rem; }
+  .slide-deck__nav { padding: 0.75rem 1.5rem; }
+  .slide-deck__actions { padding: 0.75rem 1.5rem; }
+  .slide-deck__content { padding: 1.5rem; }
+  .slide-deck__progress { padding: 0.75rem 1.5rem; }
+}
